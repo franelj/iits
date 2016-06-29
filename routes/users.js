@@ -12,6 +12,7 @@ router.post('/authenticate', check_params(['username', 'password']), function(re
   var username = req.body.username;
   var password = req.body.password;
 
+  db.query('SELECT COUNT (*) FROM twinder WHERE username=')
   res.send('Dev in progress');
 });
 
