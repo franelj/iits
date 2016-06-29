@@ -9,10 +9,10 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/authenticate', check_params(['username', 'password']), function(req, res, next) {
-  var username = req.body.username;
-  var password = req.body.password;
-
-  db.query('SELECT COUNT (*) FROM twinder WHERE username=')
+  db.query('SELECT COUNT (*) FROM twinder WHERE username=? AND password=?', [req.body.username, req.body.password], function(err, result) {
+    console.log(result);
+    console.log("err: " + err);
+  });
   res.send('Dev in progress');
 });
 
