@@ -4,6 +4,7 @@
 
 var express = require('express');
 var router = express.Router();
+var db = require('../lib/db.js');
 var check_params = require('../middlewares/check_parameters');
 
 router.post('/', check_params(["name", "description", "points", "picture", "barcode"]), function(req, res, next) {
