@@ -3,9 +3,10 @@ var router = express.Router();
 var db = require('../lib/db');
 var check_params = ('../middlewares/check_parameters');
 
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+    res.json('respond with a resource');
 });
 
 router.post('/authenticate', check_params(['username', 'password']), function(req, res, next) {
