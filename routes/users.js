@@ -1,20 +1,51 @@
 var express = require('express');
 var router = express.Router();
-var db = require('../lib/db');
-var check_params = ('../middlewares/check_parameters');
-
-
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-    res.json('respond with a resource');
-});
+var user = require('../lib/users');
+var check_params = require('../middlewares/check_parameters');
+var errors = require('../lib/errors');
 
 router.post('/authenticate', check_params(['username', 'password']), function(req, res, next) {
-  db.query('SELECT COUNT (*) FROM twinder WHERE username=? AND password=?', [req.body.username, req.body.password], function(err, result) {
-    console.log(result);
-    console.log("err: " + err);
+  console.log(user);
+  user.checkUsernamePassword(req.body.username, req.body.password, function(err, id) {
+    if (!err) {
+      user.generateToken(id, (err, token) => {
+        if (!err) {
+          res.json({jwt: token});
+        }
+        else {
+          return next(new errors.AuthenticationError());
+        }
+      });
+    }
+    else {
+      return next(err);
+    }
   });
-  res.send('Dev in progress');
 });
+
+router.get('/me', user.authMiddleware, function(req, res, next) {
+  res.json(req.currentUser);
+});
+
+router.get('/:id((\\d+))', user.authMiddleware, function(req, res, next) {
+  var id = req.params.id;
+  if (user.isAdmin) {
+    if (id) {
+      user.getUser(id, function(err, user) {
+        if (!err) {
+          res.json(user);
+        }
+        else {
+          return next(err);
+        }
+      });
+    }
+    else {
+      return next(new errors.MissingParameterError());
+    }
+  }
+});
+
+
 
 module.exports = router;
