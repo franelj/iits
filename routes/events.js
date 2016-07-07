@@ -34,11 +34,35 @@ router.put('/:id((\\d+))', [user.authMiddleware, upload.single("picture")], func
                 if (req.body[toEdit[i]] !== undefined) {
                     if (i > 0)
                         query += ", ";
-                    query += `${toEdit[i]} = "${req.body[toEdit[i]]}"`;
+                    if (toEdit[i] == "picture") {
+                        query += `${toEdit[i]} = "${req.file.path}"`;
+                    } else {
+                        query += `${toEdit[i]} = "${req.body[toEdit[i]]}"`;
+                    }
                 }
             }
             query += `WHERE id = ${req.params.id}`;
             db.query(query, function(err, rows, fields) {
+                if (err) {
+                    return next(new errors.DatabaseError("An error occurred while updating the database (2)"), req, res);
+                }
+                res.json({success: true});
+            });
+        } else {
+            return next(new errors.NotFoundError("This event does not exist"), req, res);
+        }
+    });
+});
+
+router.delete('/:id((\\d+))', [user.authMiddleware], function(req, res, next) {
+    if (!user.isAdmin(req.currentUser)) {
+        return next(new errors.PermissionDeniedError("You do not have the rights to delete an event"), req, res);
+    }
+    db.query(`SELECT * FROM events WHERE id = ${req.params.id}`, function(err, rows, fields) {
+        if (err) {
+            return next(new errors.DatabaseError("An error occurred while updating the database (1)"), req, res);
+        } else if (rows.length > 0) {
+            db.query(`DELETE FROM events WHERE id = ${req.params.id}`, function(err, rows, fields) {
                 if (err) {
                     return next(new errors.DatabaseError("An error occurred while updating the database (2)"), req, res);
                 }
