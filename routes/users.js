@@ -1,11 +1,51 @@
 var express = require('express');
 var router = express.Router();
-var path = require('path');
-var db = require('../lib/db.js');
+var user = require('../lib/users');
+var check_params = require('../middlewares/check_parameters');
+var errors = require('../lib/errors');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-    res.json('respond with a resource');
+router.post('/authenticate', check_params(['username', 'password']), function(req, res, next) {
+  console.log(user);
+  user.checkUsernamePassword(req.body.username, req.body.password, function(err, id) {
+    if (!err) {
+      user.generateToken(id, (err, token) => {
+        if (!err) {
+          res.json({jwt: token});
+        }
+        else {
+          return next(new errors.AuthenticationError());
+        }
+      });
+    }
+    else {
+      return next(err);
+    }
+  });
 });
+
+router.get('/me', user.authMiddleware, function(req, res, next) {
+  res.json(req.currentUser);
+});
+
+router.get('/:id((\\d+))', user.authMiddleware, function(req, res, next) {
+  var id = req.params.id;
+  if (user.isAdmin) {
+    if (id) {
+      user.getUser(id, function(err, user) {
+        if (!err) {
+          res.json(user);
+        }
+        else {
+          return next(err);
+        }
+      });
+    }
+    else {
+      return next(new errors.MissingParameterError());
+    }
+  }
+});
+
+
 
 module.exports = router;
