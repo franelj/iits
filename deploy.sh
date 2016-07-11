@@ -4,7 +4,7 @@ exec ssh-agent bash
 ssh-add /home/clint/.ssh/id_rsa.pub
 cd /home/clint/twinder/tmp
 echo "Cloning repository..."
-git clone git@github:clint42/yn.git twinder
+git clone git@github:franelj/yn.git twinder
 cd twinder
 echo "NPM Install"
 npm install
