@@ -6,7 +6,6 @@ cd /home/clint/twinder/tmp
 echo "Cloning repository..."
 git clone git@github:clint42/yn.git twinder
 cd twinder
-git checkout feature/21
 echo "NPM Install"
 npm install
 echo "Cleaning old deployement"
