@@ -14,13 +14,10 @@ var db = require('../lib/db');
 var errors = require('../lib/errors');
 var user = require("../lib/users.js");
 
-//router.post('/', [user.authMiddleware, upload.single("picture"), check_parameters(["name", "description", "points"])], function(req, res, next) {
-//    if (!user.isAdmin(req.currentUser)) {
-//        return next(new errors.PermissionDeniedError("You do not have the rights to create a reward"), req, res);
-//    }
-
-router.post('/', [upload.single("picture"), check_parameters(["name", "description", "points"])], function(req, res, next) {
-    console.log(req.file);
+router.post('/', [user.authMiddleware, upload.single("picture"), check_parameters(["name", "description", "points"])], function(req, res, next) {
+    if (!user.isAdmin(req.currentUser)) {
+        return next(new errors.PermissionDeniedError("You do not have the rights to create a reward"), req, res);
+    }
     db.query(`INSERT INTO rewards (name, description, points, picture) VALUES ("${req.body.name}", "${req.body.description}", "${req.body.points}", "${req.file.path}")`, function(err, rows, fields) {
         if (err) {
             return next(new errors.DatabaseError("An error occurred while creating the reward"), req, res);
@@ -29,11 +26,10 @@ router.post('/', [upload.single("picture"), check_parameters(["name", "descripti
     });
 });
 
-//router.put('/:id((\\d+))', [user.authMiddleware, upload.single("picture")], function(req, res, next) {
-//    if (!user.isAdmin(req.currentUser)) {
-//        return next(new errors.PermissionDeniedError("You do not have the rights to edit a reward"), req, res);
-//    }
-router.put('/:id((\\d+))', [upload.single("picture")], function(req, res, next) {
+router.put('/:id((\\d+))', [user.authMiddleware, upload.single("picture")], function(req, res, next) {
+    if (!user.isAdmin(req.currentUser)) {
+        return next(new errors.PermissionDeniedError("You do not have the rights to edit a reward"), req, res);
+    }
     db.query(`SELECT * FROM rewards WHERE id = ${req.params.id}`, function(err, rows, fields) {
         if (err) {
             return next(new errors.DatabaseError("An error occurred while editing the reward"), req, res);
@@ -64,11 +60,10 @@ router.put('/:id((\\d+))', [upload.single("picture")], function(req, res, next) 
     });
 });
 
-//router.delete('/:id((\\d+))', [user.authMiddleware], function(req, res, next) {
-//    if (!user.isAdmin(req.currentUser)) {
-//        return next(new errors.PermissionDeniedError("You do not have the rights to delete a reward"), req, res);
-//    }
-router.delete('/:id((\\d+))', function(req, res, next) {
+router.delete('/:id((\\d+))', [user.authMiddleware], function(req, res, next) {
+    if (!user.isAdmin(req.currentUser)) {
+        return next(new errors.PermissionDeniedError("You do not have the rights to delete a reward"), req, res);
+    }
     db.query(`SELECT * FROM rewards WHERE id = ${req.params.id}`, function(err, rows, fields) {
         if (err) {
             return next(new errors.DatabaseError("An error occurred while deleting the reward"), req, res);
@@ -85,7 +80,7 @@ router.delete('/:id((\\d+))', function(req, res, next) {
     });
 });
 
-router.get('/list', function(req, res, next) {
+router.get('/list', [user.authMiddleware], function(req, res, next) {
     let page = req.query.page > 0 ? req.query.page : 1,
         perpage = req.query.perpage > 0 ? req.query.perpage : 10;
     db.query('SELECT * FROM rewards', function(err, rows, fields) {
