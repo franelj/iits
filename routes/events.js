@@ -18,6 +18,23 @@ var barcode = require("../lib/barcode");
  * @apiParam {String} description The event description
  * @apiParam {Number} points The event points value
  *
+ * @apiSuccess {Object} barcode The barcode informations
+ *
+ * @apiSuccessExample {json} Success-Response
+ * HTTP/1.1 200 OK
+ *  barcode {
+ *   "picture": {
+ *      "type": "Buffer",
+ *      "data": "Picture data in hexadecimal"
+ *   },
+ *   "length": "length of the buffer",
+ *   "width": "width of the picture",
+ *   "height": "height of the picture",
+ * }
+ *
+ * @apiUse NotFoundError
+ * @apiUse DatabaseError
+ *
  */
 router.post('/', [user.authMiddleware, upload.single("picture"), check_parameters(["name", "description", "points"])], function(req, res, next) {
     if (!user.isAdmin(req.currentUser)) {
