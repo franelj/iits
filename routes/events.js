@@ -36,28 +36,29 @@ var barcode = require("../lib/barcode");
  * @apiUse DatabaseError
  *
  */
-router.post('/', [user.authMiddleware, upload.single("picture"), check_parameters(["name", "description", "points"])], function(req, res, next) {
-    if (!user.isAdmin(req.currentUser)) {
-        return next(new errors.PermissionDeniedError("You do not have the rights to create an event"), req, res);
-    }
+router.post('/', [/*user.authMiddleware, */upload.single("picture"), check_parameters(["name", "description", "points"])], function(req, res, next) {
+    // if (!user.isAdmin(req.currentUser)) {
+    //     return next(new errors.PermissionDeniedError("You do not have the rights to create an event"), req, res);
+    // }
     barcode.generateBarcodePng(function(err, png, code) {
         if (err) {
             return next(new errors.InvalidEntityError("Invalid barcode"));
         } else {
-            db.query(`INSERT INTO events (name, description, points, picture, barcode) VALUES ("${req.body.name}", "${req.body.description}",
-                    "${req.body.points}", "${req.file.path}", "${code}")`, function(err, rows, fields) {
-                if (err) {
-                    return next(new errors.DatabaseError("An error occurred while updating the database"), req, res);
-                }
+            // db.query(`INSERT INTO events (name, description, points, picture, barcode) VALUES ("${req.body.name}", "${req.body.description}",
+            //         "${req.body.points}", "${req.file.path}", "${code}")`, function(err, rows, fields) {
+            //     if (err) {
+            //         return next(new errors.DatabaseError("An error occurred while updating the database"), req, res);
+            //     }
+            console.log(code);
                 res.json({
                     barcode: {
-                        picture: png,
+                        picture: "data:image/png;base64," + new Buffer(png.buffer, 'hex').toString('base64'),
                         length: png.length,
                         width: png.readUInt32BE(16),
                         height: png.readUInt32BE(20)
                     }
                 });
-            });
+            // });
         }
     });
 });
