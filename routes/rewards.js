@@ -126,9 +126,8 @@ router.get('/list', [user.authMiddleware], function(req, res, next) {
         if (err) {
             return next(new errors.DatabaseError("An error occurred while retrieving the rewards"), req, res);
         }
-
         res.json({rewards: rows});
-    })
+    });
 });
 
 /**
@@ -139,20 +138,50 @@ router.get('/list', [user.authMiddleware], function(req, res, next) {
  * @apiParam {Array} orders The array of order with id and quantity
  *
  */
-router.post('/order', [user.authMiddleware, check_parameters(["orders"])], function(req, res, next) {
-    let query = 'SELECT * FROM rewards WHERE id=';
-
-
-    //db.query(`SELECT * FROM rewards WHERE id=${req.body.id}`, function(err, rows, fields) {
-    //    if (err) {
-    //        return next(new errors.DatabaseError("An error occurred while ordering rewards"))
-    //    } else if (rows.length > 0) {
-    //
-    //    } else {
-    //        return next(new errors.NotFoundError("This reward does not exist"), req, res);
-    //    }
-    //
-    //})
+router.post('/order', [user.authMiddleware], function(req, res, next) {
+    let orders = req.body.orders,
+        user = req.currentUser,
+        query;
+    for (var order in orders) {
+        if (query == undefined) {
+            query = `SELECT * FROM rewards WHERE id IN (${order["id"]}`;
+        } else {
+            query += `, ${order["id"]}`;
+        }
+        query += ")";
+    }
+    db.query(query, function(err, rows, fields) {
+        if (err) {
+            return next(new errors.DatabaseError("An error occurred while retrieving the reward"), req, res);
+        } else if (rows.length == orders.length) {
+            let totalPointCost = 0,
+                insertQuery;
+            for (var order in orders) {
+                for (var row in rows) {
+                    if (order["id"] == row.id) {
+                        totalPointCost += order["quantity"] * row.points;
+                        if (insertQuery == undefined) {
+                            insertQuery = `INSERT INTO orders (userid, rewardid, quantity) VALUES ("${user.id}", "${order["id"]}", "${order["quantity"]}")`
+                        } else {
+                            insertQuery += `, ("${user.id}", "${order["id"]}", "${order["quantity"]}")`;
+                        }
+                    }
+                }
+            }
+            if (req.currentUser.points < totalPointCost) {
+                res.json({success: false});
+            }
+            db.query(insertQuery, function(err, rows, fields) {
+                if (err) {
+                    return next(new errors.DatabaseError("An error occurred while retrieving the reward"), req, res);
+                }
+                user.points = user.points - totalPointCost;
+                res.json({success: true});
+            });
+        } else {
+            return next(new errors.NotFoundError("A reward does not exist"), req, res);
+        }
+    });
 });
 
 module.exports = router;
