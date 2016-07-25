@@ -9,13 +9,45 @@ var multer = require("multer");
 var upload = multer({ dest: './uploads/' });
 var db = require('../lib/db');
 var errors = require('../lib/errors');
-var user = require("../lib/users.js");
+var user = require("../lib/users");
+var eventsLib = require('../lib/events');
 
-router.get('/all', [usersLib.authMiddleware], function(req, res, next) {
-    var nbResults = req.query.nbPerPage || 10;
-    var offset = req.query.offset || 0;
+router.get('/all', [user.authMiddleware], function(req, res, next) {
+    var perPage = req.query.perPage || 10;
+    var page = req.query.page || 0;
 
+    if (page > 0 && perPage > 0) {
+        eventsLib.listEvents(perPage, page, function(err, results) {
+            if (!err) {
+                return res.json(results);
+            }
+            else {
+                return next(err);
+            }
+        });
+    }
+    else {
+        return next(new errors.MissingParameterError);
+    }
+});
 
+router.put('/validate/:id((\\d+))', [user.authMiddleware], function(req, res, next) {
+    var eventId = parseInt(req.params.id);
+    var code = req.body.code;
+
+    if (eventId >= 0) {
+        eventsLib.validateEvent(eventId, code, req.currentUser.id, function(err, results) {
+            if (!err) {
+                res.json({points: results});
+            }
+            else {
+                return next(err);
+            }
+        });
+    }
+    else {
+        return next(new errors.InvalidParameterError);
+    }
 });
 
 router.post('/create', [user.authMiddleware, upload.single("picture"), check_parameters(["name", "description", "points"])], function(req, res, next) {
