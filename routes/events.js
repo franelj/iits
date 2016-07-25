@@ -42,6 +42,7 @@ router.post('/', [user.authMiddleware, upload.single("picture"), check_parameter
     }
     barcode.generateBarcodePng(function(err, png, code) {
         if (err) {
+            console.log(err);
             return next(new errors.InvalidEntityError("Invalid barcode"));
         } else {
             db.query(`INSERT INTO events (name, description, points, picture, barcode) VALUES ("${req.body.name}", "${req.body.description}",
