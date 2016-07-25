@@ -1,7 +1,11 @@
+USE twinder;
+
+SET FOREIGN_KEY_CHECKS = 0;
 TRUNCATE validatedEvents;
 TRUNCATE events;
 TRUNCATE rewards;
 TRUNCATE users;
+SET FOREIGN_KEY_CHECKS = 1;
 
 
 INSERT INTO users VALUES('user-1', 'test', 0, 0);
