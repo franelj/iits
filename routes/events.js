@@ -1,3 +1,7 @@
+/**
+ * Created by Aurelien PRIEUR on 06/07/16 for iits.
+ */
+
 var express = require('express');
 var router = express.Router();
 var check_parameters = require('../middlewares/check_parameters');
@@ -5,8 +9,47 @@ var multer = require("multer");
 var upload = multer({ dest: './uploads/' });
 var db = require('../lib/db');
 var errors = require('../lib/errors');
-var user = require("../lib/users.js");
 var barcode = require("../lib/barcode");
+var user = require("../lib/users");
+var eventsLib = require('../lib/events');
+
+router.get('/all', [user.authMiddleware], function(req, res, next) {
+    var perPage = req.query.perPage || 10;
+    var page = req.query.page || 0;
+
+    if (page > 0 && perPage > 0) {
+        eventsLib.listEvents(perPage, page, function(err, results) {
+            if (!err) {
+                return res.json(results);
+            }
+            else {
+                return next(err);
+            }
+        });
+    }
+    else {
+        return next(new errors.MissingParameterError);
+    }
+});
+
+router.put('/validate/:id((\\d+))', [user.authMiddleware], function(req, res, next) {
+    var eventId = parseInt(req.params.id);
+    var code = req.body.code;
+
+    if (eventId >= 0) {
+        eventsLib.validateEvent(eventId, code, req.currentUser.id, function(err, results) {
+            if (!err) {
+                res.json({points: results});
+            }
+            else {
+                return next(err);
+            }
+        });
+    }
+    else {
+        return next(new errors.InvalidParameterError);
+    }
+});
 
 /**
  * @apiVersion 1.0.0
@@ -125,7 +168,7 @@ router.delete('/:id((\\d+))', [user.authMiddleware], function(req, res, next) {
         if (err) {
             return next(new errors.DatabaseError("An error occurred while updating the database (1)"), req, res);
         } else if (rows.length > 0) {
-            db.query(`DELETE FROM events WHERE id = ${req.params.id}`, function(err, rows, fields) {
+            db.query(`DELETE FROM events WHERE id = ${req.params.id}`, function (err, rows, fields) {
                 if (err) {
                     return next(new errors.DatabaseError("An error occurred while updating the database (2)"), req, res);
                 }
