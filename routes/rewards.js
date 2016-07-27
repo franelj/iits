@@ -10,9 +10,10 @@ var db = require('../lib/db.js');
 var check_parameters = require('../middlewares/check_parameters');
 var multer = require('multer');
 var upload = multer({ dest: './uploads/' });
-var db = require('../lib/db');
 var errors = require('../lib/errors');
 var user = require("../lib/users.js");
+var fs = require('fs');
+var path = require('path');
 
 /**
  * @apiVersion 1.0.0
@@ -25,15 +26,28 @@ var user = require("../lib/users.js");
  * @apiParam {Number} points The reward points value
  *
  */
-router.post('/', [user.authMiddleware, upload.single("picture"), check_parameters(["name", "description", "points"])], function(req, res, next) {
+router.post('/', [user.authMiddleware, upload.single("picture"), check_parameters(["name", "description", "points", "picture"])], function(req, res, next) {
+    var fullPath = "";
+    if (req.file) {fullPath = path.resolve(req.file.path);}
     if (!user.isAdmin(req.currentUser)) {
-        return next(new errors.PermissionDeniedError("You do not have the rights to create a reward"), req, res);
+        fs.access(fullPath, function(err) {
+            if (!err) {
+                fs.unlink(fullPath, function(err) { });
+            }
+            return next(new errors.PermissionDeniedError("You do not have the rights to create a reward"), req, res);
+        });
     }
     db.query(`INSERT INTO rewards (name, description, points, picture) VALUES ("${req.body.name}", "${req.body.description}", "${req.body.points}", "${req.file.path}")`, function(err, rows, fields) {
         if (err) {
-            return next(new errors.DatabaseError("An error occurred while creating the reward"), req, res);
+            fs.access(fullPath, function(err) {
+                if (!err) {
+                    fs.unlink(fullPath, function(err) { });
+                }
+                return next(new errors.DatabaseError("An error occurred while creating the reward"), req, res);
+            });
+        } else {
+            res.json({ success: true });
         }
-        res.json({ success: true });
     });
 });
 
@@ -139,14 +153,15 @@ router.get('/list', [user.authMiddleware], function(req, res, next) {
  *
  */
 router.post('/order', [user.authMiddleware], function(req, res, next) {
-    let orders = req.body.orders,
+    let orders = JSON.parse(req.body.orders),
         user = req.currentUser,
         query;
+//    console.log(req.body.order);
     for (var order in orders) {
         if (query == undefined) {
-            query = `SELECT * FROM rewards WHERE id IN (${order["id"]}`;
+            query = `SELECT * FROM rewards WHERE id IN (${order.id}`;
         } else {
-            query += `, ${order["id"]}`;
+            query += `, ${order.id}`;
         }
         query += ")";
     }
@@ -158,12 +173,12 @@ router.post('/order', [user.authMiddleware], function(req, res, next) {
                 insertQuery;
             for (var order in orders) {
                 for (var row in rows) {
-                    if (order["id"] == row.id) {
-                        totalPointCost += order["quantity"] * row.points;
+                    if (order.id == row.id) {
+                        totalPointCost += order.quantity * row.points;
                         if (insertQuery == undefined) {
-                            insertQuery = `INSERT INTO orders (userid, rewardid, quantity) VALUES ("${user.id}", "${order["id"]}", "${order["quantity"]}")`
+                            insertQuery = `INSERT INTO orders (userid, rewardid, quantity) VALUES ("${user.id}", "${order.id}", "${order.quantity}")`
                         } else {
-                            insertQuery += `, ("${user.id}", "${order["id"]}", "${order["quantity"]}")`;
+                            insertQuery += `, ("${user.id}", "${order.id}", "${order.quantity}")`;
                         }
                     }
                 }
