@@ -13,23 +13,22 @@ elif [ "$2" == "-updateDb" ]; then
 else
 	updateDb=false
 fi
-echo updateDb
-if $udpateDb; then
-	echo 'UpdateDb is true'
-fi
 
 ssh clint@zerobeta.me << EOF
 exec ssh-agent bash
 ssh-add /home/clint/.ssh/iits_deploy_rsa	
 cd /home/clint/twinder/tmp
+echo "Cleaning clone folder"
+rm -fr /home/clint/twinder/tmp/twinder
+echo "Cleaning old deployement"
+rm -fr /home/clint/twinder/deploy
+ls -R /home/clint/twinder
 echo "Cloning repository..."
 git clone git@github:franelj/iits.git twinder
 cd twinder
 git checkout $branch
 echo "NPM Install"
 npm install
-echo "Cleaning old deployement"
-rm -fr /home/clint/twinder/deploy/
 echo "Moving files..."
 mkdir /home/clint/twinder/deploy/
 mv /home/clint/twinder/tmp/twinder/* /home/clint/twinder/deploy/
