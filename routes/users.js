@@ -5,7 +5,6 @@ var check_params = require('../middlewares/check_parameters');
 var errors = require('../lib/errors');
 
 router.post('/authenticate', check_params(['username', 'password']), function(req, res, next) {
-  console.log(user);
   user.checkUsernamePassword(req.body.username, req.body.password, function(err, id) {
     if (!err) {
       user.generateToken(id, (err, token) => {
