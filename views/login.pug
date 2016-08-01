@@ -1,0 +1,18 @@
+extends layout.pug
+
+block content
+    div.row
+        div.col-md-12
+            h1 Administration
+            form.login(method="post", action="/admin/login", id="loginForm")
+                div.alert.alert-danger.hidden(id="error", role="alert")
+                    p
+                div.alert.alert-success.hidden(id="success", role="alert")
+                    p
+                div.form-group
+                    label Username
+                    input.form-control(id="username", type="text", name="username", placeholder="Enter your username")
+                div.form-group
+                    label Password
+                    input.form-control(id="password", type="password", name="password", placeholder="Enter your password")
+                button#submit.btn.btn-info(type="submit") Login
