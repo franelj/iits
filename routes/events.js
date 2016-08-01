@@ -20,9 +20,10 @@ router.get('/all', [user.authMiddleware], function(req, res, next) {
     var upcoming = req.query.upcoming;
     if (past === undefined && upcoming === undefined) {
         next(new errors.MissingParameterError('Past or upcoming must be specified'));
+        return;
     }
     if (page > 0 && perPage > 0) {
-        eventsLib.listEvents(perPage, page, function(err, results) {
+        eventsLib.listEvents(perPage, page, past, upcoming, function(err, results) {
             if (!err) {
                 return res.json(results);
             }
