@@ -42,7 +42,7 @@ if $updateDb; then
 fi
 echo "Start application using PM2"
 cd /home/clint/twinder/deploy/
-NODE_ENV=production PORT=3001 pm2 start bin/www -i max
+NODE_ENV=production PORT=3001 pm2 start bin/www -i max -f --name twinder
 pm2 list
 echo "Done"
 EOF
