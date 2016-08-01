@@ -43,7 +43,7 @@ if $updateDb; then
 fi
 echo "Start application using PM2"
 pm2 stop twinder
-NODE_ENV=production PORT=3001 pm2 start bin/www -i max --name twinder
+NODE_ENV=production PORT=3001 pm2 start bin/www --name twinder
 pm2 list
 echo "Done"
 EOF
