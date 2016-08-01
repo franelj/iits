@@ -34,6 +34,7 @@ mkdir /home/clint/twinder/deploy/
 mv /home/clint/twinder/tmp/twinder/* /home/clint/twinder/deploy/
 echo "Removing temporary files..."
 rm -fr /home/clint/twinder/tmp/twinder
+cd /home/clint/twinder/deploy/
 if $updateDb; then
 	echo "Drop and update DB"
 	mysql -u root -peRfC}3f?kQx < twinder.sql
@@ -41,8 +42,8 @@ if $updateDb; then
 	mysql -u root -peRfC}3f?kQx < seed.sql
 fi
 echo "Start application using PM2"
-cd /home/clint/twinder/deploy/
-NODE_ENV=production PORT=3001 pm2 start bin/www -i max
+pm2 stop twinder
+NODE_ENV=production PORT=3001 pm2 start bin/www --name twinder
 pm2 list
 echo "Done"
 EOF
