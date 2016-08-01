@@ -13,6 +13,7 @@ var upload = multer({ dest: './uploads/' });
 var db = require('../lib/db');
 var errors = require('../lib/errors');
 var user = require("../lib/users.js");
+var reward_service = require('../services/reward_service');
 
 /**
  * @apiVersion 1.0.0
@@ -25,17 +26,26 @@ var user = require("../lib/users.js");
  * @apiParam {Number} points The reward points value
  *
  */
+
 router.post('/', [user.authMiddleware, upload.single("picture"), check_parameters(["name", "description", "points"])], function(req, res, next) {
-    if (!user.isAdmin(req.currentUser)) {
-        return next(new errors.PermissionDeniedError("You do not have the rights to create a reward"), req, res);
-    }
-    db.query(`INSERT INTO rewards (name, description, points, picture) VALUES ("${req.body.name}", "${req.body.description}", "${req.body.points}", "${req.file.path}")`, function(err, rows, fields) {
-        if (err) {
-            return next(new errors.DatabaseError("An error occurred while creating the reward"), req, res);
-        }
-        res.json({ success: true });
+    reward_service.create(req.body.name, req.body.description, req.body.points, req.file.path).then((success) => {
+        res.json({success: success});
+    }).catch((err) => {
+        next(err);
     });
 });
+
+//router.post('/', [user.authMiddleware, upload.single("picture"), check_parameters(["name", "description", "points"])], function(req, res, next) {
+//    if (!user.isAdmin(req.currentUser)) {
+//        return next(new errors.PermissionDeniedError("You do not have the rights to create a reward"), req, res);
+//    }
+//    db.query(`INSERT INTO rewards (name, description, points, picture) VALUES ("${req.body.name}", "${req.body.description}", "${req.body.points}", "${req.file.path}")`, function(err, rows, fields) {
+//        if (err) {
+//            return next(new errors.DatabaseError("An error occurred while creating the reward"), req, res);
+//        }
+//        res.json({ success: true });
+//    });
+//});
 
 /**
  * @apiVersion 1.0.0
