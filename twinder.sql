@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `events` (
   `points` int(11) NOT NULL,
   `picture` varchar(255) NOT NULL,
   `barcode` varchar(255) NOT NULL,
-  `date`, datetime NOT NULL,
+  `date` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
