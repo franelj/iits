@@ -42,7 +42,8 @@ if $updateDb; then
 	mysql -u root -peRfC}3f?kQx < seed.sql
 fi
 echo "Start application using PM2"
-NODE_ENV=production PORT=3001 pm2 start bin/www -i max -f --name twinder
+pm2 stop twinder
+NODE_ENV=production PORT=3001 pm2 start bin/www -i max --name twinder
 pm2 list
 echo "Done"
 EOF
