@@ -158,23 +158,25 @@ router.post('/order', [user.authMiddleware], function(req, res, next) {
     let orders = JSON.parse(req.body.orders),
         user = req.currentUser,
         query;
-//    console.log(req.body.order);
-    for (var order in orders) {
+    for (var i = 0; i < orders.orders.length; i++) {
+        var order = orders.orders[i];
         if (query == undefined) {
             query = `SELECT * FROM rewards WHERE id IN (${order.id}`;
         } else {
             query += `, ${order.id}`;
         }
-        query += ")";
     }
+    query += ")";
     db.query(query, function(err, rows, fields) {
         if (err) {
             return next(new errors.DatabaseError("An error occurred while retrieving the reward"), req, res);
-        } else if (rows.length == orders.length) {
+        } else if (rows.length == orders.orders.length) {
             let totalPointCost = 0,
                 insertQuery;
-            for (var order in orders) {
-                for (var row in rows) {
+            for (var i = 0; i < orders.orders.length; i++) {
+                var order = orders.orders[i];
+                for (var j = 0; j < rows.length; j++) {
+                    var row = rows[j];
                     if (order.id == row.id) {
                         totalPointCost += order.quantity * row.points;
                         if (insertQuery == undefined) {
@@ -185,8 +187,8 @@ router.post('/order', [user.authMiddleware], function(req, res, next) {
                     }
                 }
             }
-            if (req.currentUser.points < totalPointCost) {
-                res.json({success: false});
+            if (!req.currentUser.points || req.currentUser.points < totalPointCost) {
+                return res.json({success: false});
             }
             db.query(insertQuery, function(err, rows, fields) {
                 if (err) {
