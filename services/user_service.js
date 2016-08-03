@@ -7,11 +7,13 @@ var errors = require('../lib/errors');
 
 module.exports = {
     authenticate: function(username, password) {
+        console.log(username, password);
         return new Promise((resolve, reject) => {
             user.checkUsernamePassword(username, password, function(err, id) {
                 if (!err) {
                     user.generateToken(id, (err, token) => {
                         if (!err) {
+                            console.log("service", token);
                             resolve(token);
                         }
                         else {

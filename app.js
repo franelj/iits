@@ -1,9 +1,9 @@
 var express = require('express');
 var favicon = require('serve-favicon');
-var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var path = require('path');
+var session = require('client-sessions');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -32,6 +32,20 @@ app.use(function (req, res, next) {
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+
+app.use(session({
+    cookieName: 'session',
+    secret: '9pwrU8MxY8YS9WRgG5bq1IQvDZc045y6',
+    duration: 30 * 60 * 1000,
+    activeDuration: 5 * 60 * 1000,
+    cookie: {
+        path: '/admin', // cookie will only be sent to requests under '/api'
+        maxAge: 60000, // duration of the cookie in milliseconds, defaults to duration above
+        ephemeral: false, // when true, cookie expires when the browser closes
+        httpOnly: true, // when true, cookie is not accessible from javascript
+        secure: false // when true, cookie will only be sent over SSL. use key 'secureProxy' instead if you handle SSL not in your node process
+    }
+}));
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
