@@ -19,7 +19,12 @@ module.exports = {
                  });
              }
          } else {
-             reject(new errors.PermissionDeniedError("You do not have the rights to create a reward"));
+             fs.access(fullPath, function(err) {
+                 if (!err) {
+                     fs.unlink(fullPath, function(err) { });
+                 }
+                 reject(new errors.PermissionDeniedError("You do not have the rights to create a reward"));
+             });
          }
       });
     }
