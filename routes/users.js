@@ -23,6 +23,7 @@ router.post('/authenticate', check_params(['username', 'password']), function(re
 });
 
 router.get('/me', user.authMiddleware, function(req, res, next) {
+
   res.json(req.currentUser);
 });
 
