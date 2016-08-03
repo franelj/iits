@@ -7,7 +7,6 @@ TRUNCATE rewards;
 TRUNCATE users;
 SET FOREIGN_KEY_CHECKS = 1;
 
-
 INSERT INTO users (`username`, `firstname`, `lastname`, `password`, `csusmid`, `status`, `points`) VALUES('user-1', 'john', 'doe', 'test', 0, 0, 0);
 INSERT INTO users (`username`, `firstname`, `lastname`, `password`, `csusmid`, `status`, `points`) VALUES('admin', 'pat', 'smith', 'test', 0, 1, 4200);
 INSERT INTO users (`username`, `firstname`, `lastname`, `password`, `csusmid`, `status`, `points`) VALUES('superadmin', 'toto', 'titi', 'test', 0, 1, 30);
