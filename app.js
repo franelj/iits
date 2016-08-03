@@ -4,7 +4,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var path = require('path');
 var session = require('client-sessions');
-
+var morgan = require('morgan');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var events = require('./routes/events');
@@ -46,6 +46,7 @@ app.use(session({
         secure: false // when true, cookie will only be sent over SSL. use key 'secureProxy' instead if you handle SSL not in your node process
     }
 }));
+app.use(morgan('dev'));
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

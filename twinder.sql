@@ -7,6 +7,7 @@
 -- Server version: 5.6.29
 -- PHP Version: 5.5.29
 
+SET FOREIGN_KEY_CHECKS = 0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
@@ -36,8 +37,10 @@ CREATE TABLE IF NOT EXISTS `events` (
   `points` int(11) NOT NULL,
   `picture` varchar(255) NOT NULL,
   `barcode` varchar(255) NOT NULL,
+  `date` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 -- --------------------------------------------------------
 
@@ -68,8 +71,26 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(255) NOT NULL,
   `csusmid` varchar(255) NOT NULL,
   `status` int(11) NOT NULL,
+  `points` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `validatedEvents`;
+CREATE TABLE IF NOT EXISTS `validatedEvents` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` int(11) NOT NULL,
+  `eventId` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX (`userId`, `eventId`),
+  FOREIGN KEY (`userId`)
+    REFERENCES users(`id`)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`eventId`)
+    REFERENCES events(`id`)
+    ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+SET FOREIGN_KEY_CHECKS = 1;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
