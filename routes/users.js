@@ -18,7 +18,7 @@ router.get('/me', user.authMiddleware, function(req, res, next) {
 
 router.get('/:id((\\d+))', user.authMiddleware, function(req, res, next) {
     var id = req.params.id;
-    user_service.get(id).then((user) => {
+    user_service.get(req.currentUser, id).then((user) => {
         res.json(user);
     }).catch((err) => {
         next(err);
