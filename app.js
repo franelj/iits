@@ -3,7 +3,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var morgan = require('morgan');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var events = require('./routes/events');
@@ -27,6 +27,8 @@ app.use(function (req, res, next) {
         next();
     }
 });
+
+app.use(morgan('dev'));
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `events` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
 -- --------------------------------------------------------
 
 --

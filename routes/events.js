@@ -16,9 +16,12 @@ var eventsLib = require('../lib/events');
 router.get('/all', [user.authMiddleware], function(req, res, next) {
     var perPage = req.query.perPage || 10;
     var page = req.query.page || 0;
-    var past = req.query.pastEvent || true;
-    var upcoming = req.query.upcoming || true;
-
+    var past = req.query.past;
+    var upcoming = req.query.upcoming;
+    if (past === undefined && upcoming === undefined) {
+        next(new errors.MissingParameterError('Past or upcoming must be specified'));
+        return;
+    }
     if (page > 0 && perPage > 0) {
         eventsLib.listEvents(perPage, page, past, upcoming, function(err, results) {
             if (!err) {
