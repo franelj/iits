@@ -44,7 +44,7 @@ router.put('/validate/:id((\\d+))', [user.authMiddleware], function(req, res, ne
     if (eventId >= 0) {
         eventsLib.validateEvent(eventId, code, req.currentUser.id, function(err, results) {
             if (!err) {
-                res.json({points: results});
+                res.json({event: results});
             }
             else {
                 return next(err);
