@@ -5,10 +5,9 @@ block content
         div.col-md-12
             h1 Administration
             form.login(method="post", action="/admin/login", id="loginForm")
-                div.alert.alert-danger.hidden(id="error", role="alert")
-                    p
-                div.alert.alert-success.hidden(id="success", role="alert")
-                    p
+                if error
+                    div.alert.alert-danger(id="error", role="alert")
+                        p= errpr
                 div.form-group
                     label Username
                     input.form-control(id="username", type="text", name="username", placeholder="Enter your username")

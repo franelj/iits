@@ -9,10 +9,11 @@ var router = express.Router();
 var db = require('../lib/db.js');
 var check_parameters = require('../middlewares/check_parameters');
 var multer = require('multer');
-var upload = multer({ dest: './uploads/' });
-var db = require('../lib/db');
+var path = require('path');
+var upload = multer({ dest: path.resolve('./uploads') });
 var errors = require('../lib/errors');
 var user = require("../lib/users.js");
+var fs = require('fs');
 var reward_service = require('../services/reward_service');
 
 /**
