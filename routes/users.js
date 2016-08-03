@@ -23,8 +23,14 @@ router.post('/authenticate', check_params(['username', 'password']), function(re
 });
 
 router.get('/me', user.authMiddleware, function(req, res, next) {
-
-  res.json(req.currentUser);
+  user.getMe(req.currentUser.id, function(err, user) {
+    if (!err) {
+      res.json(user);
+    }
+    else {
+      next(err);
+    }
+  });
 });
 
 router.get('/:id((\\d+))', user.authMiddleware, function(req, res, next) {

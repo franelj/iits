@@ -16,3 +16,5 @@ INSERT INTO events (`name`, `description`, `points`, `date`) VALUES ('test-1', '
 ('test-3', 'Test event 3', 300, NOW() + INTERVAL 1 DAY), ('test-4', 'Test event 4', 50, NOW() - INTERVAL 1 DAY), ('test-5', 'Test event 5', 110, NOW() + INTERVAL 2 DAY);
 
 INSERT INTO rewards (`name`, `description`, `points`) VALUES('reward1', 'test reward 1', '50'), ('reward2', 'test reward 2', '100');
+
+INSERT INTO validatedEvents (`userId`, `eventId`) VALUES (1, 1), (1, 3), (2, 2), (2, 4), (2, 1);
