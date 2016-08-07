@@ -9,7 +9,6 @@ var user_service = require("../services/user_service");
 var user = require("../lib/users");
 
 router.get('/', [user.session], function(req, res, next) {
-    console.log("test", req.session);
     if (req.session && req.session.user) {
         res.render('index', {pageTitle: "Dashboard"});
     } else {
@@ -18,21 +17,22 @@ router.get('/', [user.session], function(req, res, next) {
 });
 
 router.get('/login', [user.session], function(req, res, next) {
-    res.render('login', {pageTitle: "Login"});
+    if (req.session && req.session.user) {
+        res.redirect('/admin');
+    } else {
+        res.render('login', {pageTitle: "Login"});
+    }
 });
 
 router.post('/login', [user.session], function(req, res, next) {
     if (req.session && req.session.user) {
-        console.log("qwertyuiop", req.session.user);
+        res.redirect('/admin');
     }
     user_service.authenticate(req.body.username, req.body.password).then((token) => {
-        // token session
-        console.log("LOGIN AUTH SUCCESS", req.session.token);
         req.session.token = token;
         res.redirect('/admin');
     }).catch((err) => {
-        console.log("LOGIN AUTH ERR", err);
-        res.render('login', {pageTitle: "Login", error: "Authentication failed"});
+        res.render('login', {pageTitle: "Login", errorMsg: "Authentication failed"});
     });
 });
 
