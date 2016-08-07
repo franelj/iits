@@ -7,53 +7,25 @@ var router = express.Router();
 var check_parameters = require('../middlewares/check_parameters');
 var multer = require("multer");
 var upload = multer({ dest: './uploads/' });
-var db = require('../lib/db');
 var errors = require('../lib/errors');
-var barcode = require("../lib/barcode");
 var user = require("../lib/users");
-var eventsLib = require('../lib/events');
+var event_service = require('../services/event_service');
+
 
 router.get('/all', [user.authMiddleware], function(req, res, next) {
-    var perPage = req.query.perPage || 10;
-    var page = req.query.page || 1;
-    var past = req.query.past;
-    var upcoming = req.query.upcoming;
-    if (past === undefined && upcoming === undefined) {
-        past = true;
-        upcoming = true;
-    }
-    if (page > 0 && perPage > 0) {
-        eventsLib.listEvents(perPage, page, past, upcoming, function(err, results) {
-            if (!err) {
-                return res.json(results);
-            }
-            else {
-                return next(err);
-            }
-        });
-    }
-    else {
-        return next(new errors.MissingParameterError);
-    }
+    event_service.list(req.query.perPage, req.query.page, req.query.past, req.query.upcoming).then((events) => {
+        res.json({results: events});
+    }).catch((err) => {
+        next(err);
+    });
 });
 
 router.put('/validate/:id((\\d+))', [user.authMiddleware], function(req, res, next) {
-    var eventId = parseInt(req.params.id);
-    var code = req.body.code;
-
-    if (eventId >= 0) {
-        eventsLib.validateEvent(eventId, code, req.currentUser.id, function(err, results) {
-            if (!err) {
-                res.json({points: results});
-            }
-            else {
-                return next(err);
-            }
-        });
-    }
-    else {
-        return next(new errors.InvalidParameterError);
-    }
+    event_service.validate(req.currentUser, parseInt(req.params.id), req.body.code).then((points) => {
+        res.json({results: points});
+    }).catch((err) => {
+        next(err);
+    });
 });
 
 /**
@@ -85,29 +57,10 @@ router.put('/validate/:id((\\d+))', [user.authMiddleware], function(req, res, ne
  *
  */
 router.post('/', [user.authMiddleware, upload.single("picture"), check_parameters(["name", "description", "points"])], function(req, res, next) {
-    if (!user.isAdmin(req.currentUser)) {
-        return next(new errors.PermissionDeniedError("You do not have the rights to create an event"), req, res);
-    }
-    barcode.generateBarcodePng(function(err, png, code) {
-        if (err) {
-            console.log(err);
-            return next(new errors.InvalidEntityError("Invalid barcode"));
-        } else {
-            db.query(`INSERT INTO events (name, description, points, picture, barcode) VALUES ("${req.body.name}", "${req.body.description}",
-                    "${req.body.points}", "${req.file.path}", "${code}")`, function(err, rows, fields) {
-                if (err) {
-                    return next(new errors.DatabaseError("An error occurred while updating the database"), req, res);
-                }
-                res.json({
-                    barcode: {
-                        picture: "data:image/png;base64," + new Buffer(png.buffer, 'hex').toString('base64'),
-                        length: png.length,
-                        width: png.readUInt32BE(16),
-                        height: png.readUInt32BE(20)
-                    }
-                });
-            });
-        }
+    event_service.create(req.currentUser, req.body.name, req.body.description, req.body.points, req.file.path).then((success) => {
+        res.json({success: success});
+    }).catch((err) => {
+        next(err);
     });
 });
 
@@ -124,36 +77,10 @@ router.post('/', [user.authMiddleware, upload.single("picture"), check_parameter
  *
  */
 router.put('/:id((\\d+))', [user.authMiddleware, upload.single("picture")], function(req, res, next) {
-    if (!user.isAdmin(req.currentUser)) {
-        return next(new errors.PermissionDeniedError("You do not have the rights to edit an event"), req, res);
-    }
-    db.query(`SELECT * FROM events WHERE id = ${req.params.id}`, function(err, rows, fields) {
-        if (err) {
-            return next(new errors.DatabaseError("An error occurred while updating the database (1)"), req, res);
-        } else if (rows.length > 0) {
-            var query = "UPDATE events SET ";
-            var toEdit = ["name", "description", "points", "picture"];
-            for (var i = 0; i < toEdit.length; i++) {
-                if (req.body[toEdit[i]] !== undefined) {
-                    if (i > 0)
-                        query += ", ";
-                    if (toEdit[i] == "picture") {
-                        query += `${toEdit[i]} = "${req.file.path}"`;
-                    } else {
-                        query += `${toEdit[i]} = "${req.body[toEdit[i]]}"`;
-                    }
-                }
-            }
-            query += `WHERE id = ${req.params.id}`;
-            db.query(query, function(err, rows, fields) {
-                if (err) {
-                    return next(new errors.DatabaseError("An error occurred while updating the database (2)"), req, res);
-                }
-                res.json({success: true});
-            });
-        } else {
-            return next(new errors.NotFoundError("This event does not exist"), req, res);
-        }
+    event_service.edit(req.currentUser, req.params.id, req.body, req.file.path).then((success) => {
+        res.json({success: success});
+    }).catch((err) => {
+        next(err);
     });
 });
 
@@ -166,22 +93,10 @@ router.put('/:id((\\d+))', [user.authMiddleware, upload.single("picture")], func
  *
  */
 router.delete('/:id((\\d+))', [user.authMiddleware], function(req, res, next) {
-    if (!user.isAdmin(req.currentUser)) {
-        return next(new errors.PermissionDeniedError("You do not have the rights to delete an event"), req, res);
-    }
-    db.query(`SELECT * FROM events WHERE id = ${req.params.id}`, function(err, rows, fields) {
-        if (err) {
-            return next(new errors.DatabaseError("An error occurred while updating the database (1)"), req, res);
-        } else if (rows.length > 0) {
-            db.query(`DELETE FROM events WHERE id = ${req.params.id}`, function (err, rows, fields) {
-                if (err) {
-                    return next(new errors.DatabaseError("An error occurred while updating the database (2)"), req, res);
-                }
-                res.json({success: true});
-            });
-        } else {
-            return next(new errors.NotFoundError("This event does not exist"), req, res);
-        }
+    event_service.delete(req.currentUser, req.params.id).then((success) => {
+        res.json({success: success});
+    }).catch((err) => {
+        next(err);
     });
 });
 
