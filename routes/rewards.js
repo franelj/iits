@@ -11,11 +11,9 @@ var check_parameters = require('../middlewares/check_parameters');
 var multer = require('multer');
 var path = require('path');
 var upload = multer({ dest: path.resolve('./uploads') });
-var db = require('../lib/db');
 var errors = require('../lib/errors');
 var user = require("../lib/users.js");
 var fs = require('fs');
-var path = require('path');
 var reward_service = require('../services/reward_service');
 
 /**
@@ -31,7 +29,7 @@ var reward_service = require('../services/reward_service');
  */
 
 router.post('/', [user.authMiddleware, upload.single("picture"), check_parameters(["name", "description", "points"])], function(req, res, next) {
-    reward_service.create(req.body.name, req.body.description, req.body.points, req.file.path).then((success) => {
+    reward_service.create(req.currentUser, req.body.name, req.body.description, req.body.points, req.file.path).then((success) => {
         res.json({success: success});
     }).catch((err) => {
         next(err);
@@ -62,38 +60,46 @@ router.post('/', [user.authMiddleware, upload.single("picture"), check_parameter
  *
  */
 router.put('/:id((\\d+))', [user.authMiddleware, upload.single("picture")], function(req, res, next) {
-    if (!user.isAdmin(req.currentUser)) {
-        return next(new errors.PermissionDeniedError("You do not have the rights to edit a reward"), req, res);
-    }
-    db.query(`SELECT * FROM rewards WHERE id = ${req.params.id}`, function(err, rows, fields) {
-        if (err) {
-            return next(new errors.DatabaseError("An error occurred while editing the reward"), req, res);
-        } else if (rows.length > 0) {
-            var query = "UPDATE rewards SET ";
-            var toEdit = ["name", "description", "points", "picture"];
-            for (var i = 0; i < toEdit.length; i++) {
-                if (req.body[toEdit[i]] !== undefined) {
-                    if (i > 0)
-                        query += ", ";
-                    if (toEdit[i] == "picture") {
-                        query += `${toEdit[i]} = "${req.file.path}"`;
-                    } else {
-                        query += `${toEdit[i]} = "${req.body[toEdit[i]]}"`;
-                    }
-                }
-            }
-            query += `WHERE id = ${req.params.id}`;
-            db.query(query, function(err, rows, fields) {
-                if (err) {
-                    return next(new errors.DatabaseError("An error occurred while editing the reward"), req, res);
-                }
-                res.json({success: true});
-            });
-        } else {
-            return next(new errors.NotFoundError("This reward does not exist"), req, res);
-        }
+    reward_service.edit(req.currentUser, req.params.id, req.body, req.file.path).then((success) => {
+        res.json({success: success});
+    }).catch((err) => {
+        next(err);
     });
 });
+
+//router.put('/:id((\\d+))', [user.authMiddleware, upload.single("picture")], function(req, res, next) {
+//    if (!user.isAdmin(req.currentUser)) {
+//        return next(new errors.PermissionDeniedError("You do not have the rights to edit a reward"), req, res);
+//    }
+//    db.query(`SELECT * FROM rewards WHERE id = ${req.params.id}`, function(err, rows, fields) {
+//        if (err) {
+//            return next(new errors.DatabaseError("An error occurred while editing the reward"), req, res);
+//        } else if (rows.length > 0) {
+//            var query = "UPDATE rewards SET ";
+//            var toEdit = ["name", "description", "points", "picture"];
+//            for (var i = 0; i < toEdit.length; i++) {
+//                if (req.body[toEdit[i]] !== undefined) {
+//                    if (i > 0)
+//                        query += ", ";
+//                    if (toEdit[i] == "picture") {
+//                        query += `${toEdit[i]} = "${req.file.path}"`;
+//                    } else {
+//                        query += `${toEdit[i]} = "${req.body[toEdit[i]]}"`;
+//                    }
+//                }
+//            }
+//            query += `WHERE id = ${req.params.id}`;
+//            db.query(query, function(err, rows, fields) {
+//                if (err) {
+//                    return next(new errors.DatabaseError("An error occurred while editing the reward"), req, res);
+//                }
+//                res.json({success: true});
+//            });
+//        } else {
+//            return next(new errors.NotFoundError("This reward does not exist"), req, res);
+//        }
+//    });
+//});
 
 /**
  * @apiVersion 1.0.0
@@ -104,24 +110,32 @@ router.put('/:id((\\d+))', [user.authMiddleware, upload.single("picture")], func
  *
  */
 router.delete('/:id((\\d+))', [user.authMiddleware], function(req, res, next) {
-    if (!user.isAdmin(req.currentUser)) {
-        return next(new errors.PermissionDeniedError("You do not have the rights to delete a reward"), req, res);
-    }
-    db.query(`SELECT * FROM rewards WHERE id = ${req.params.id}`, function(err, rows, fields) {
-        if (err) {
-            return next(new errors.DatabaseError("An error occurred while deleting the reward"), req, res);
-        } else if (rows.length > 0) {
-            db.query(`DELETE FROM rewards WHERE id = ${req.params.id}`, function(err, rows, fields) {
-                if (err) {
-                    return next(new errors.DatabaseError("An error occurred while deleting the reward"), req, res);
-                }
-                res.json({success: true});
-            });
-        } else {
-            return next(new errors.NotFoundError("This reward does not exist"), req, res);
-        }
+    reward_service.delete(req.currentUser, req.params.id).then((success) => {
+        res.json({success: success});
+    }).catch((err) => {
+        next(err);
     });
 });
+
+//router.delete('/:id((\\d+))', [user.authMiddleware], function(req, res, next) {
+//    if (!user.isAdmin(req.currentUser)) {
+//        return next(new errors.PermissionDeniedError("You do not have the rights to delete a reward"), req, res);
+//    }
+//    db.query(`SELECT * FROM rewards WHERE id = ${req.params.id}`, function(err, rows, fields) {
+//        if (err) {
+//            return next(new errors.DatabaseError("An error occurred while deleting the reward"), req, res);
+//        } else if (rows.length > 0) {
+//            db.query(`DELETE FROM rewards WHERE id = ${req.params.id}`, function(err, rows, fields) {
+//                if (err) {
+//                    return next(new errors.DatabaseError("An error occurred while deleting the reward"), req, res);
+//                }
+//                res.json({success: true});
+//            });
+//        } else {
+//            return next(new errors.NotFoundError("This reward does not exist"), req, res);
+//        }
+//    });
+//});
 
 /**
  * @apiVersion 1.0.0
@@ -133,15 +147,23 @@ router.delete('/:id((\\d+))', [user.authMiddleware], function(req, res, next) {
  *
  */
 router.get('/list', [user.authMiddleware], function(req, res, next) {
-    let page = req.query.page > 0 ? req.query.page : 1,
-        perpage = req.query.perpage > 0 ? req.query.perpage : 10;
-    db.query(`SELECT * FROM rewards LIMIT ${perpage} OFFSET ${(page - 1) * perpage}`, function(err, rows, fields) {
-        if (err) {
-            return next(new errors.DatabaseError("An error occurred while retrieving the rewards"), req, res);
-        }
-        res.json({rewards: rows});
+    reward_service.list(req.query.page, req.query.perpage).then((rewards) => {
+        res.json({rewards: rewards});
+    }).catch((err) => {
+        next(err);
     });
 });
+
+//router.get('/list', [user.authMiddleware], function(req, res, next) {
+//    let page = req.query.page > 0 ? req.query.page : 1,
+//        perpage = req.query.perpage > 0 ? req.query.perpage : 10;
+//    db.query(`SELECT * FROM rewards LIMIT ${perpage} OFFSET ${(page - 1) * perpage}`, function(err, rows, fields) {
+//        if (err) {
+//            return next(new errors.DatabaseError("An error occurred while retrieving the rewards"), req, res);
+//        }
+//        res.json({rewards: rows});
+//    })
+//});
 
 /**
  * @apiVersion 1.0.0
@@ -151,52 +173,11 @@ router.get('/list', [user.authMiddleware], function(req, res, next) {
  * @apiParam {Array} orders The array of order with id and quantity
  *
  */
-router.post('/order', [user.authMiddleware], function(req, res, next) {
-    let orders = JSON.parse(req.body.orders),
-        user = req.currentUser,
-        query;
-    for (var i = 0; i < orders.orders.length; i++) {
-        var order = orders.orders[i];
-        if (query == undefined) {
-            query = `SELECT * FROM rewards WHERE id IN (${order.id}`;
-        } else {
-            query += `, ${order.id}`;
-        }
-    }
-    query += ")";
-    db.query(query, function(err, rows, fields) {
-        if (err) {
-            return next(new errors.DatabaseError("An error occurred while retrieving the reward"), req, res);
-        } else if (rows.length == orders.orders.length) {
-            let totalPointCost = 0,
-                insertQuery;
-            for (var i = 0; i < orders.orders.length; i++) {
-                var order = orders.orders[i];
-                for (var j = 0; j < rows.length; j++) {
-                    var row = rows[j];
-                    if (order.id == row.id) {
-                        totalPointCost += order.quantity * row.points;
-                        if (insertQuery == undefined) {
-                            insertQuery = `INSERT INTO orders (userid, rewardid, quantity) VALUES ("${user.id}", "${order.id}", "${order.quantity}")`
-                        } else {
-                            insertQuery += `, ("${user.id}", "${order.id}", "${order.quantity}")`;
-                        }
-                    }
-                }
-            }
-            if (!req.currentUser.points || req.currentUser.points < totalPointCost) {
-                return res.json({success: false});
-            }
-            db.query(insertQuery, function(err, rows, fields) {
-                if (err) {
-                    return next(new errors.DatabaseError("An error occurred while retrieving the reward"), req, res);
-                }
-                user.points = user.points - totalPointCost;
-                res.json({success: true});
-            });
-        } else {
-            return next(new errors.NotFoundError("A reward does not exist"), req, res);
-        }
+router.post('/order', [user.authMiddleware], check_parameters(["orders"]), function(req, res, next) {
+    reward_service.order(req.currentUser, req.body.orders).then((success) => {
+        res.json({success: success});
+    }).catch((err) => {
+        next(err);
     });
 });
 
