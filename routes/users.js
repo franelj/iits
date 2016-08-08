@@ -26,8 +26,17 @@ router.get('/:id((\\d+))', user.authMiddleware, function(req, res, next) {
 });
 
 router.get('/list', user.authMiddleware, function(req, res, next) {
-    user_service.list(req.query.perPage, req.query.page).then((list) => {
-        res.json({"list": list});
+    user_service.list(req.query.page, req.query.perPage).then((list) => {
+        res.json({"users": list});
+    }).catch((err) => {
+        next(err);
+    });
+});
+
+router.post('/grant', [user.authMiddleware, check_params(['id'])], function(req, res, next) {
+    var id = req.body.id;
+    user_service.grant(id).then((success) => {
+        res.json({"success": success});
     }).catch((err) => {
         next(err);
     });

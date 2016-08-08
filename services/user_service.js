@@ -42,19 +42,45 @@ module.exports = {
                 else {
                     reject(new errors.MissingParameterError());
                 }
+            } else {
+                reject(new errors.PermissionDeniedError())
             }
         });
     },
     list: function(page, perPage) {
-        if (page <= 0)
-            page = 1;
-        if (perPage <= 0)
-            perPage = 10;
-        db.query(`SELECT * FROM users LIMIT ${perPage} OFFSET ${(page - 1) * perPage}`, function(err, rows, fields) {
-            if (err) {
-                reject(new errors.DatabaseError("An error occurred while retrieving the rewards"));
+        return new Promise((resolve, reject) => {
+            if (page <= 0 || page === undefined)
+                page = 1;
+            if (perPage <= 0 || perPage === undefined)
+                perPage = 10;
+            db.query(`SELECT * FROM users LIMIT ${perPage} OFFSET ${(page - 1) * perPage}`, function(err, rows, fields) {
+                if (err) {
+                    reject(new errors.DatabaseError("An error occurred while retrieving the users"));
+                } else {
+                    resolve(rows);
+                }
+            });
+        });
+    },
+    grant: function(id) {
+        return new Promise((resolve, reject) => {
+            if (user.isAdmin(currentUser)) {
+                db.query(`SELECT * FROM users WHERE id = ${id}`, function(err, rows, fields) {
+                    if (rows.length > 0) {
+                        db.query(`UPDATE users SET status = 1 WHERE id = ${id}`, function(err, rows, fields) {
+                            if (err) {
+                                reject(new errors.DatabaseError("An error occurred while editing the user status"))
+                            } else {
+                                resolve(true);
+                            }
+                        });
+                    } else {
+                        reject(new errors.DatabaseError());
+                    }
+                });
+            } else {
+                reject(new errors.PermissionDeniedError())
             }
-            resolve(rows);
         });
     }
 };
