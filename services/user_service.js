@@ -4,6 +4,7 @@
 
 var user = require('../lib/users');
 var errors = require('../lib/errors');
+var db = require('../lib/db');
 
 module.exports = {
     authenticate: function(username, password) {
@@ -42,6 +43,18 @@ module.exports = {
                     reject(new errors.MissingParameterError());
                 }
             }
+        });
+    },
+    list: function(page, perPage) {
+        if (page <= 0)
+            page = 1;
+        if (perPage <= 0)
+            perPage = 10;
+        db.query(`SELECT * FROM users LIMIT ${perPage} OFFSET ${(page - 1) * perPage}`, function(err, rows, fields) {
+            if (err) {
+                reject(new errors.DatabaseError("An error occurred while retrieving the rewards"));
+            }
+            resolve(rows);
         });
     }
 };

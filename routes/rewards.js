@@ -36,18 +36,6 @@ router.post('/', [user.authMiddleware, upload.single("picture"), check_parameter
     });
 });
 
-//router.post('/', [user.authMiddleware, upload.single("picture"), check_parameters(["name", "description", "points"])], function(req, res, next) {
-//    if (!user.isAdmin(req.currentUser)) {
-//        return next(new errors.PermissionDeniedError("You do not have the rights to create a reward"), req, res);
-//    }
-//    db.query(`INSERT INTO rewards (name, description, points, picture) VALUES ("${req.body.name}", "${req.body.description}", "${req.body.points}", "${req.file.path}")`, function(err, rows, fields) {
-//        if (err) {
-//            return next(new errors.DatabaseError("An error occurred while creating the reward"), req, res);
-//        }
-//        res.json({ success: true });
-//    });
-//});
-
 /**
  * @apiVersion 1.0.0
  * @api {put} /:id((\\d+)) Edit
@@ -67,40 +55,6 @@ router.put('/:id((\\d+))', [user.authMiddleware, upload.single("picture")], func
     });
 });
 
-//router.put('/:id((\\d+))', [user.authMiddleware, upload.single("picture")], function(req, res, next) {
-//    if (!user.isAdmin(req.currentUser)) {
-//        return next(new errors.PermissionDeniedError("You do not have the rights to edit a reward"), req, res);
-//    }
-//    db.query(`SELECT * FROM rewards WHERE id = ${req.params.id}`, function(err, rows, fields) {
-//        if (err) {
-//            return next(new errors.DatabaseError("An error occurred while editing the reward"), req, res);
-//        } else if (rows.length > 0) {
-//            var query = "UPDATE rewards SET ";
-//            var toEdit = ["name", "description", "points", "picture"];
-//            for (var i = 0; i < toEdit.length; i++) {
-//                if (req.body[toEdit[i]] !== undefined) {
-//                    if (i > 0)
-//                        query += ", ";
-//                    if (toEdit[i] == "picture") {
-//                        query += `${toEdit[i]} = "${req.file.path}"`;
-//                    } else {
-//                        query += `${toEdit[i]} = "${req.body[toEdit[i]]}"`;
-//                    }
-//                }
-//            }
-//            query += `WHERE id = ${req.params.id}`;
-//            db.query(query, function(err, rows, fields) {
-//                if (err) {
-//                    return next(new errors.DatabaseError("An error occurred while editing the reward"), req, res);
-//                }
-//                res.json({success: true});
-//            });
-//        } else {
-//            return next(new errors.NotFoundError("This reward does not exist"), req, res);
-//        }
-//    });
-//});
-
 /**
  * @apiVersion 1.0.0
  * @api {delete} /:id((\\d+)) Delete
@@ -116,26 +70,6 @@ router.delete('/:id((\\d+))', [user.authMiddleware], function(req, res, next) {
         next(err);
     });
 });
-
-//router.delete('/:id((\\d+))', [user.authMiddleware], function(req, res, next) {
-//    if (!user.isAdmin(req.currentUser)) {
-//        return next(new errors.PermissionDeniedError("You do not have the rights to delete a reward"), req, res);
-//    }
-//    db.query(`SELECT * FROM rewards WHERE id = ${req.params.id}`, function(err, rows, fields) {
-//        if (err) {
-//            return next(new errors.DatabaseError("An error occurred while deleting the reward"), req, res);
-//        } else if (rows.length > 0) {
-//            db.query(`DELETE FROM rewards WHERE id = ${req.params.id}`, function(err, rows, fields) {
-//                if (err) {
-//                    return next(new errors.DatabaseError("An error occurred while deleting the reward"), req, res);
-//                }
-//                res.json({success: true});
-//            });
-//        } else {
-//            return next(new errors.NotFoundError("This reward does not exist"), req, res);
-//        }
-//    });
-//});
 
 /**
  * @apiVersion 1.0.0
@@ -153,17 +87,6 @@ router.get('/list', [user.authMiddleware], function(req, res, next) {
         next(err);
     });
 });
-
-//router.get('/list', [user.authMiddleware], function(req, res, next) {
-//    let page = req.query.page > 0 ? req.query.page : 1,
-//        perpage = req.query.perpage > 0 ? req.query.perpage : 10;
-//    db.query(`SELECT * FROM rewards LIMIT ${perpage} OFFSET ${(page - 1) * perpage}`, function(err, rows, fields) {
-//        if (err) {
-//            return next(new errors.DatabaseError("An error occurred while retrieving the rewards"), req, res);
-//        }
-//        res.json({rewards: rows});
-//    })
-//});
 
 /**
  * @apiVersion 1.0.0

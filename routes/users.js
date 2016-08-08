@@ -25,4 +25,12 @@ router.get('/:id((\\d+))', user.authMiddleware, function(req, res, next) {
     });
 });
 
+router.get('/list', user.authMiddleware, function(req, res, next) {
+    user_service.list(req.query.perPage, req.query.page).then((list) => {
+        res.json({"list": list});
+    }).catch((err) => {
+        next(err);
+    });
+});
+
 module.exports = router;

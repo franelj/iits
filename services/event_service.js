@@ -2,6 +2,8 @@
  * Created by julie on 7/28/16.
  */
 
+"use strict";
+
 var user = require('../lib/users');
 var errors = require('../lib/errors');
 var eventsLib = require('../lib/events');
