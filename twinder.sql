@@ -35,8 +35,8 @@ CREATE TABLE IF NOT EXISTS `events` (
   `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `points` int(11) NOT NULL,
-  `picture` varchar(255) NOT NULL,
-  `barcode` varchar(255) NOT NULL,
+  `picture` varchar(255) DEFAULT NULL,
+  `barcode` varchar(255) DEFAULT NULL,
   `date` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -54,7 +54,23 @@ CREATE TABLE IF NOT EXISTS `rewards` (
   `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `points` int(11) NOT NULL,
-  `picture` varchar(255) NOT NULL,
+  `picture` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE IF NOT EXISTS `orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userid` int(11) NOT NULL,
+  `rewardid` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -68,6 +84,8 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL UNIQUE,
+  `firstname` varchar(255) NOT NULL,
+  `lastname` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `csusmid` varchar(255) NOT NULL,
   `status` int(11) NOT NULL,
