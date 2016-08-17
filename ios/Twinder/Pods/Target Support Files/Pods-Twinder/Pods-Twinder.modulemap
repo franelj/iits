@@ -1,0 +1,6 @@
+framework module Pods_Twinder {
+  umbrella header "Pods-Twinder-umbrella.h"
+
+  export *
+  module * { export * }
+}

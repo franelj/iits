@@ -1,0 +1,577 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2D2F90D41D244A790062F3F1 /* String+EmailValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2F90D31D244A790062F3F1 /* String+EmailValidation.swift */; };
+		2DE2AADA1D34203200C75E4E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE2AAD91D34203200C75E4E /* ProfileViewController.swift */; };
+		2DFF1A3B1D5271BE00240DC0 /* ParserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFF1A3A1D5271BE00240DC0 /* ParserService.swift */; };
+		60EFA130B8639AA6D8CDA679 /* Pods_Twinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22732B73258AA67CF93D22FE /* Pods_Twinder.framework */; };
+		BE1AA71D1D186D900016405E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1AA70C1D186D900016405E /* AppDelegate.swift */; };
+		BE1AA71E1D186D900016405E /* BarcodeReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1AA70E1D186D900016405E /* BarcodeReaderViewController.swift */; };
+		BE1AA71F1D186D900016405E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE1AA7131D186D900016405E /* Assets.xcassets */; };
+		BE1AA7201D186D900016405E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE1AA7151D186D900016405E /* LaunchScreen.storyboard */; };
+		BE1AA7211D186D900016405E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE1AA7171D186D900016405E /* Main.storyboard */; };
+		BE1AA7221D186D900016405E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BE1AA71A1D186D900016405E /* Info.plist */; };
+		BE1AA7231D186D900016405E /* Twinder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BE1AA71B1D186D900016405E /* Twinder.xcdatamodeld */; };
+		BE45D70B1D243B5000F32088 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE45D7081D243B5000F32088 /* Event.swift */; };
+		BE45D70C1D243B5000F32088 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE45D7091D243B5000F32088 /* User.swift */; };
+		BE45D70D1D243B5000F32088 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE45D70A1D243B5000F32088 /* UserManager.swift */; };
+		BE45D7101D243B6D00F32088 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE45D70E1D243B6D00F32088 /* EventsViewController.swift */; };
+		BE45D7111D243B6D00F32088 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE45D70F1D243B6D00F32088 /* LoginViewController.swift */; };
+		BE45D7131D2442F000F32088 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE45D7121D2442F000F32088 /* EventTableViewCell.swift */; };
+		BE5C140E1D21A39400314692 /* UIColor+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5C140D1D21A39400314692 /* UIColor+Convenience.swift */; };
+		BEBCE1791D4694D400284114 /* Reward_.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEBCE1781D4694D400284114 /* Reward_.swift */; };
+		BED2FDEC1D1E706E009EDD65 /* BarcodeDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED2FDEB1D1E706E009EDD65 /* BarcodeDetailsViewController.swift */; };
+		BEF697241D2446260068A24F /* RewardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF697231D2446260068A24F /* RewardsViewController.swift */; };
+		BEF697261D244C5F0068A24F /* RewardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF697251D244C5F0068A24F /* RewardTableViewCell.swift */; };
+		BEFE8E541D1B0C80008678C1 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFE8E531D1B0C80008678C1 /* DataService.swift */; };
+		BEFE8E571D1B0CA3008678C1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFE8E561D1B0CA3008678C1 /* Constants.swift */; };
+		BEFF07151D57CA6500DCA413 /* Rewards.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFF07141D57CA6500DCA413 /* Rewards.swift */; };
+		BEFF07171D57CEF200DCA413 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFF07161D57CEF200DCA413 /* Error.swift */; };
+		BEFF07191D57D81300DCA413 /* SendRewardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEFF07181D57D81300DCA413 /* SendRewardViewController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		116D6A3B8096DDA461C62545 /* Pods-Twinder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Twinder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Twinder/Pods-Twinder.debug.xcconfig"; sourceTree = "<group>"; };
+		22732B73258AA67CF93D22FE /* Pods_Twinder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Twinder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D2F90D31D244A790062F3F1 /* String+EmailValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+EmailValidation.swift"; sourceTree = "<group>"; };
+		2DE2AAD91D34203200C75E4E /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		2DFF1A3A1D5271BE00240DC0 /* ParserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParserService.swift; path = Services/ParserService.swift; sourceTree = "<group>"; };
+		BE1AA6F11D186CEA0016405E /* Twinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE1AA70C1D186D900016405E /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		BE1AA70E1D186D900016405E /* BarcodeReaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeReaderViewController.swift; sourceTree = "<group>"; };
+		BE1AA7131D186D900016405E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BE1AA7161D186D900016405E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		BE1AA7181D186D900016405E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		BE1AA71A1D186D900016405E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BE1AA71C1D186D900016405E /* Twinder.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Twinder.xcdatamodel; sourceTree = "<group>"; };
+		BE45D7081D243B5000F32088 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		BE45D7091D243B5000F32088 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		BE45D70A1D243B5000F32088 /* UserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		BE45D70E1D243B6D00F32088 /* EventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
+		BE45D70F1D243B6D00F32088 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		BE45D7121D2442F000F32088 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
+		BE5C140D1D21A39400314692 /* UIColor+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Convenience.swift"; sourceTree = "<group>"; };
+		BEBCE1781D4694D400284114 /* Reward_.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reward_.swift; sourceTree = "<group>"; };
+		BED2FDEB1D1E706E009EDD65 /* BarcodeDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeDetailsViewController.swift; sourceTree = "<group>"; };
+		BEF697231D2446260068A24F /* RewardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RewardsViewController.swift; sourceTree = "<group>"; };
+		BEF697251D244C5F0068A24F /* RewardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RewardTableViewCell.swift; sourceTree = "<group>"; };
+		BEFE8E531D1B0C80008678C1 /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataService.swift; path = Services/DataService.swift; sourceTree = "<group>"; };
+		BEFE8E561D1B0CA3008678C1 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		BEFF07141D57CA6500DCA413 /* Rewards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rewards.swift; sourceTree = "<group>"; };
+		BEFF07161D57CEF200DCA413 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		BEFF07181D57D81300DCA413 /* SendRewardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendRewardViewController.swift; sourceTree = "<group>"; };
+		F63DA34F1F65DCFFBE8B9E02 /* Pods-Twinder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Twinder.release.xcconfig"; path = "Pods/Target Support Files/Pods-Twinder/Pods-Twinder.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BE1AA6EE1D186CEA0016405E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				60EFA130B8639AA6D8CDA679 /* Pods_Twinder.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		92B00B45D8A4E4AFA7B8D3F3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				116D6A3B8096DDA461C62545 /* Pods-Twinder.debug.xcconfig */,
+				F63DA34F1F65DCFFBE8B9E02 /* Pods-Twinder.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		A84BFCF7E6D19825E0E95C3F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				22732B73258AA67CF93D22FE /* Pods_Twinder.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BE1AA6E81D186CEA0016405E = {
+			isa = PBXGroup;
+			children = (
+				BE1AA7091D186D900016405E /* Twinder */,
+				BE1AA6F21D186CEA0016405E /* Products */,
+				92B00B45D8A4E4AFA7B8D3F3 /* Pods */,
+				A84BFCF7E6D19825E0E95C3F /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		BE1AA6F21D186CEA0016405E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BE1AA6F11D186CEA0016405E /* Twinder.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BE1AA7091D186D900016405E /* Twinder */ = {
+			isa = PBXGroup;
+			children = (
+				BE1AA70A1D186D900016405E /* Classes */,
+				BE1AA7111D186D900016405E /* Resources */,
+				BE1AA7191D186D900016405E /* Supporting Files */,
+			);
+			path = Twinder;
+			sourceTree = "<group>";
+		};
+		BE1AA70A1D186D900016405E /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				BE1AA70B1D186D900016405E /* AppDelegate */,
+				BE1AA70D1D186D900016405E /* Controllers */,
+				BE1AA70F1D186D900016405E /* Helpers */,
+				BE1AA7101D186D900016405E /* Views */,
+				BE45D7071D243B5000F32088 /* Models */,
+				BEFE8E511D1B0C62008678C1 /* Services */,
+				BEFE8E551D1B0C91008678C1 /* Utility */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		BE1AA70B1D186D900016405E /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				BE1AA70C1D186D900016405E /* AppDelegate.swift */,
+			);
+			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		BE1AA70D1D186D900016405E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BE45D70F1D243B6D00F32088 /* LoginViewController.swift */,
+				BE45D70E1D243B6D00F32088 /* EventsViewController.swift */,
+				BE1AA70E1D186D900016405E /* BarcodeReaderViewController.swift */,
+				BED2FDEB1D1E706E009EDD65 /* BarcodeDetailsViewController.swift */,
+				BEF697231D2446260068A24F /* RewardsViewController.swift */,
+				2DE2AAD91D34203200C75E4E /* ProfileViewController.swift */,
+				BEFF07181D57D81300DCA413 /* SendRewardViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		BE1AA70F1D186D900016405E /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				BE5C140D1D21A39400314692 /* UIColor+Convenience.swift */,
+				2D2F90D31D244A790062F3F1 /* String+EmailValidation.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		BE1AA7101D186D900016405E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BE45D7121D2442F000F32088 /* EventTableViewCell.swift */,
+				BEF697251D244C5F0068A24F /* RewardTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		BE1AA7111D186D900016405E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BE1AA7121D186D900016405E /* Images */,
+				BE1AA7141D186D900016405E /* NIBs */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		BE1AA7121D186D900016405E /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				BE1AA7131D186D900016405E /* Assets.xcassets */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		BE1AA7141D186D900016405E /* NIBs */ = {
+			isa = PBXGroup;
+			children = (
+				BE1AA7151D186D900016405E /* LaunchScreen.storyboard */,
+				BE1AA7171D186D900016405E /* Main.storyboard */,
+			);
+			path = NIBs;
+			sourceTree = "<group>";
+		};
+		BE1AA7191D186D900016405E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BE1AA71A1D186D900016405E /* Info.plist */,
+				BE1AA71B1D186D900016405E /* Twinder.xcdatamodeld */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BE45D7071D243B5000F32088 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BE45D7081D243B5000F32088 /* Event.swift */,
+				BEFF07161D57CEF200DCA413 /* Error.swift */,
+				BE45D7091D243B5000F32088 /* User.swift */,
+				BE45D70A1D243B5000F32088 /* UserManager.swift */,
+				BEBCE1781D4694D400284114 /* Reward_.swift */,
+				BEFF07141D57CA6500DCA413 /* Rewards.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		BEFE8E511D1B0C62008678C1 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				BEFE8E531D1B0C80008678C1 /* DataService.swift */,
+				2DFF1A3A1D5271BE00240DC0 /* ParserService.swift */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		BEFE8E551D1B0C91008678C1 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				BEFE8E561D1B0CA3008678C1 /* Constants.swift */,
+			);
+			name = Utility;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BE1AA6F01D186CEA0016405E /* Twinder */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BE1AA7061D186CEA0016405E /* Build configuration list for PBXNativeTarget "Twinder" */;
+			buildPhases = (
+				875BAE607DAED40EE04951C5 /* [CP] Check Pods Manifest.lock */,
+				BE1AA6ED1D186CEA0016405E /* Sources */,
+				BE1AA6EE1D186CEA0016405E /* Frameworks */,
+				BE1AA6EF1D186CEA0016405E /* Resources */,
+				68C5E406E15E89847F9CF24E /* [CP] Embed Pods Frameworks */,
+				22EB95A685C0FF3A44932A3C /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Twinder;
+			productName = Twinder;
+			productReference = BE1AA6F11D186CEA0016405E /* Twinder.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BE1AA6E91D186CEA0016405E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "Paul Jarysta";
+				TargetAttributes = {
+					BE1AA6F01D186CEA0016405E = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 744F92Q6K9;
+					};
+				};
+			};
+			buildConfigurationList = BE1AA6EC1D186CEA0016405E /* Build configuration list for PBXProject "Twinder" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BE1AA6E81D186CEA0016405E;
+			productRefGroup = BE1AA6F21D186CEA0016405E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BE1AA6F01D186CEA0016405E /* Twinder */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BE1AA6EF1D186CEA0016405E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BE1AA7221D186D900016405E /* Info.plist in Resources */,
+				BE1AA7211D186D900016405E /* Main.storyboard in Resources */,
+				BE1AA71F1D186D900016405E /* Assets.xcassets in Resources */,
+				BE1AA7201D186D900016405E /* LaunchScreen.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		22EB95A685C0FF3A44932A3C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Twinder/Pods-Twinder-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		68C5E406E15E89847F9CF24E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Twinder/Pods-Twinder-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		875BAE607DAED40EE04951C5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BE1AA6ED1D186CEA0016405E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BE45D7111D243B6D00F32088 /* LoginViewController.swift in Sources */,
+				BEF697241D2446260068A24F /* RewardsViewController.swift in Sources */,
+				BE45D7101D243B6D00F32088 /* EventsViewController.swift in Sources */,
+				BE45D70B1D243B5000F32088 /* Event.swift in Sources */,
+				BEFE8E571D1B0CA3008678C1 /* Constants.swift in Sources */,
+				BE45D7131D2442F000F32088 /* EventTableViewCell.swift in Sources */,
+				BE1AA7231D186D900016405E /* Twinder.xcdatamodeld in Sources */,
+				2DE2AADA1D34203200C75E4E /* ProfileViewController.swift in Sources */,
+				2DFF1A3B1D5271BE00240DC0 /* ParserService.swift in Sources */,
+				BED2FDEC1D1E706E009EDD65 /* BarcodeDetailsViewController.swift in Sources */,
+				BE1AA71E1D186D900016405E /* BarcodeReaderViewController.swift in Sources */,
+				BEFF07191D57D81300DCA413 /* SendRewardViewController.swift in Sources */,
+				BEBCE1791D4694D400284114 /* Reward_.swift in Sources */,
+				BE45D70C1D243B5000F32088 /* User.swift in Sources */,
+				BEF697261D244C5F0068A24F /* RewardTableViewCell.swift in Sources */,
+				BE1AA71D1D186D900016405E /* AppDelegate.swift in Sources */,
+				2D2F90D41D244A790062F3F1 /* String+EmailValidation.swift in Sources */,
+				BEFF07151D57CA6500DCA413 /* Rewards.swift in Sources */,
+				BEFE8E541D1B0C80008678C1 /* DataService.swift in Sources */,
+				BE45D70D1D243B5000F32088 /* UserManager.swift in Sources */,
+				BEFF07171D57CEF200DCA413 /* Error.swift in Sources */,
+				BE5C140E1D21A39400314692 /* UIColor+Convenience.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		BE1AA7151D186D900016405E /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BE1AA7161D186D900016405E /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		BE1AA7171D186D900016405E /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BE1AA7181D186D900016405E /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		BE1AA7041D186CEA0016405E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		BE1AA7051D186CEA0016405E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		BE1AA7071D186CEA0016405E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 116D6A3B8096DDA461C62545 /* Pods-Twinder.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 744F92Q6K9;
+				INFOPLIST_FILE = "$(SRCROOT)/Twinder/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.pauljarysta.Twinder;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 2.3;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BE1AA7081D186CEA0016405E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F63DA34F1F65DCFFBE8B9E02 /* Pods-Twinder.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 744F92Q6K9;
+				INFOPLIST_FILE = "$(SRCROOT)/Twinder/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.pauljarysta.Twinder;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 2.3;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BE1AA6EC1D186CEA0016405E /* Build configuration list for PBXProject "Twinder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BE1AA7041D186CEA0016405E /* Debug */,
+				BE1AA7051D186CEA0016405E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BE1AA7061D186CEA0016405E /* Build configuration list for PBXNativeTarget "Twinder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BE1AA7071D186CEA0016405E /* Debug */,
+				BE1AA7081D186CEA0016405E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		BE1AA71B1D186D900016405E /* Twinder.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				BE1AA71C1D186D900016405E /* Twinder.xcdatamodel */,
+			);
+			currentVersion = BE1AA71C1D186D900016405E /* Twinder.xcdatamodel */;
+			path = Twinder.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = BE1AA6E91D186CEA0016405E /* Project object */;
+}
