@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout
+    android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.csusm.twinder.LoginActivity"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditText
+        android:layout_centerInParent="true"
+        android:hint="@string/username_hint"
+        android:singleLine="true"
+        android:id="@+id/username"
+        app:layout_widthPercent="80%"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:layout_below="@+id/username"
+        android:hint="@string/password_hint"
+        android:singleLine="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/password"
+        android:inputType="textPassword"
+        app:layout_widthPercent="80%"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <CheckBox
+        android:layout_below="@+id/password"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/rememberMe"
+        android:id="@+id/rememberBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_below="@+id/rememberBox"
+        android:layout_marginTop="10dp"
+        android:hint="@string/login_hint"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/loginButton"
+        app:layout_widthPercent="80%"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</android.support.percent.PercentRelativeLayout>

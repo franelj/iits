@@ -1,0 +1,137 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    tools:context="com.csusm.twinder.Fragment.ProfilFragment">
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp">
+
+            <ProgressBar
+                android:layout_centerHorizontal="true"
+                android:id="@+id/progressBar"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:indeterminate="false"
+                android:progressDrawable="@drawable/circular_progress_bar"
+                android:background="@drawable/circle_shape"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:max="100"
+                android:progress="65" />
+
+            <ImageView
+                android:layout_marginTop="50dp"
+                android:src="@drawable/ic_account_box_black_36dp"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/profilImageView"
+                android:layout_width="100dp"
+                android:layout_height="100dp" />
+
+            <TextView
+                android:layout_centerHorizontal="true"
+                android:id="@+id/firstNameLastName"
+                android:layout_below="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+    <android.support.v7.widget.CardView
+        android:background="@color/colorPrimaryDark"
+        android:elevation="10dp"
+        android:layout_marginTop="250dp"
+        card_view:cardElevation="2dp"
+        card_view:cardUseCompatPadding="true"
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+        <android.support.percent.PercentRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:background="@color/colorPrimaryDark"
+                app:layout_widthPercent="32.6%"
+                android:id="@+id/CSUSM_LAYOUT"
+                android:layout_alignParentStart="true"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+                <TextView
+                    android:textColor="@android:color/white"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/csusmLabel"
+                    android:id="@+id/csusmIdLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/csusmIdLabel"
+                    android:id="@+id/csusmId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:background="@color/colorPrimaryDark"
+                app:layout_widthPercent="32.6%"
+                android:id="@+id/REWARD_LAYOUT"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toEndOf="@id/CSUSM_LAYOUT">
+                <TextView
+                    android:textColor="@android:color/white"
+                    android:id="@+id/rewardLabel"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/rewardLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/rewardLabel"
+                    android:id="@+id/reward"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:background="@color/colorPrimaryDark"
+                app:layout_widthPercent="32.6%"
+                android:layout_toEndOf="@+id/REWARD_LAYOUT"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true">
+
+                <TextView
+                    android:textColor="@android:color/white"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/pointsLabel"
+                    android:text="@string/pointsLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/pointsLabel"
+                    android:id="@+id/points"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+
+        </android.support.percent.PercentRelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</FrameLayout>

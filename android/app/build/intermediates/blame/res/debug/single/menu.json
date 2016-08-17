@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Users/julie/EPITECH/CSUSM/IITS/iits/android/app/build/intermediates/res/merged/debug/menu/bottombar_menu.xml",
+        "source": "/Users/julie/EPITECH/CSUSM/IITS/iits/android/app/src/main/res/menu/bottombar_menu.xml"
+    },
+    {
+        "merged": "/Users/julie/EPITECH/CSUSM/IITS/iits/android/app/build/intermediates/res/merged/debug/menu/profil_menu.xml",
+        "source": "/Users/julie/EPITECH/CSUSM/IITS/iits/android/app/src/main/res/menu/profil_menu.xml"
+    }
+]

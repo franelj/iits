@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Users/julie/EPITECH/CSUSM/IITS/iits/android/app/build/intermediates/res/merged/debug/mipmap-hdpi-v4/ic_launcher.png",
+        "source": "/Users/julie/EPITECH/CSUSM/IITS/iits/android/app/src/main/res/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/julie/EPITECH/CSUSM/IITS/iits/android/app/build/intermediates/res/merged/debug/mipmap-hdpi-v4/ic_launcher_new.png",
+        "source": "/Users/julie/EPITECH/CSUSM/IITS/iits/android/app/src/main/res/mipmap-hdpi/ic_launcher_new.png"
+    }
+]

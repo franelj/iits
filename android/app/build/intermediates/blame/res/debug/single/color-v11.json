@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Users/julie/EPITECH/CSUSM/IITS/iits/android/app/build/intermediates/res/merged/debug/color-v11/abc_background_cache_hint_selector_material_dark.xml",
+        "source": "/Users/julie/EPITECH/CSUSM/IITS/iits/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.1.1/res/color-v11/abc_background_cache_hint_selector_material_dark.xml"
+    },
+    {
+        "merged": "/Users/julie/EPITECH/CSUSM/IITS/iits/android/app/build/intermediates/res/merged/debug/color-v11/abc_background_cache_hint_selector_material_light.xml",
+        "source": "/Users/julie/EPITECH/CSUSM/IITS/iits/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.1.1/res/color-v11/abc_background_cache_hint_selector_material_light.xml"
+    }
+]

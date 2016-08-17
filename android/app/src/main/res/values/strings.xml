@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Twinder</string>
+    <string name="scan_menu_item">Scan</string>
+    <string name="profil_menu_item">Profil</string>
+    <string name="event_menu_item">Events</string>
+
+
+    <string name="lastNameDefault">Lastname</string>
+    <string name="firstNameDefault">Firstname</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="camera_error_open">error: opening camera</string>
+    <string name="camera_error_low_storage">error : low storage</string>
+    <string name="camera_error_dependencies">error: dependencies</string>
+    <string name="camera_error">error: camera</string>
+    <string name="camera_error_dismiss">dismiss</string>
+
+
+    <string name="event_future">Future</string>
+    <string name="event_passed">Passed</string>
+
+    <string name="main_api_url">http://zerobeta.me:3001/</string>
+
+    <string name="network_error">Network Error!</string>
+    <string name="network_error_api_error">Cannot connect to API</string>
+
+    <string name="username_hint">username</string>
+    <string name="password_hint">password</string>
+    <string name="login_hint">login</string>
+    <string name="rememberMe">Remember me</string>
+    <string name="logout">Logout</string>
+
+    <string name="rewardLabel">Rewards</string>
+    <string name="pointsLabel">Points</string>
+    <string name="csusmLabel">CsusmID</string>
+
+
+</resources>
